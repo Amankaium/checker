@@ -1,4 +1,9 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block headjs %}
+    <script src="{% static 'script.js' %}"></script>
+{% endblock %}
 
 {% block content %}
 
