@@ -3,9 +3,14 @@ from .models import Url
 
 @admin.register(Url)
 class UrlAdmin(admin.ModelAdmin):
-    list_display = ["id", "url", "user", "interval",
+    list_display = ["url", "user", "interval",
                     "is_paused", "created_at", "updated_at"]
-    list_editable = ["url", "interval", "is_paused"]
+    
+    fields = ["url", "user", "interval", "is_paused",
+              "created_at", "updated_at"]
+    
+    readonly_fields = ["url", "user", "interval",
+                       "is_paused", "created_at", "updated_at"]
     
     search_fields = ["user__username", "user__first_name",
                      "user__last_name", "user__email", "url"]
