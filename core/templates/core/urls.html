@@ -1,10 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block headjs %}
-    <script src="{% static 'script.js' %}"></script>
-{% endblock %}
-
 {% block content %}
 
     <table class="table table-striped table-hover table-responsive">
@@ -18,9 +14,46 @@
         <tr>
             <td>{{ object.url }}</td>
             <td>{{ object.interval }}</td>
-            <td>{{ object.is_paused }}</td>
-            <td></td>
+            <td>{{ object.is_paused|yesno:"yes,no" }}</td>
+            <td id="status{{ object.id }}"></td>
         </tr>
         {% endfor %}
     </table>
+{% endblock %}
+
+{% block bodyjs %}
+
+    <script>
+        const urls_string = '{{ urls|escapejs }}'
+        const urls = JSON.parse(urls_string)        
+        function startShowingMessage(elem, url, interval){
+            setInterval(async function(){
+                try {
+                    const response = await fetch(url);
+                    elem.textContent = response.status;
+                    changeColor(elem, response.status)
+                } catch(e) {
+                    elem.textContent = e.message;
+                    changeColor(elem, 0)
+                }                                
+            }, interval);     
+        }
+
+        function changeColor(elem, status) {
+            if (status === 200) {
+                elem.style.backgroundColor = "green"
+            } else {
+                elem.style.cssText = "background-color: red; color: white"
+            }
+        }
+
+        for (let i=0; i<urls.length; i++) {
+            const id = urls[i].pk
+            const elem = document.getElementById(`status${id}`)
+            const url = urls[i].fields.url
+            const interval = urls[i].fields.interval * 1000
+            startShowingMessage(elem, url, interval)
+        }
+    </script>
+
 {% endblock %}
