@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    <table>
+    <table class="table table-striped table-hover table-responsive">
         <tr>
             <th>Url</th>
             <th>Interval</th>
@@ -14,7 +14,7 @@
             <td>{{ object.url }}</td>
             <td>{{ object.interval }}</td>
             <td>{{ object.is_paused }}</td>
-            <td>{{ object.status }}</td>
+            <td></td>
         </tr>
         {% endfor %}
     </table>
