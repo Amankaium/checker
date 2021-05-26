@@ -22,4 +22,5 @@ urlpatterns = [
     path("", views.HomeView.as_view(), name="homepage"),
     path("login/", views.SignInView.as_view(), name="login"),
     path("logout/", views.SignOutView.as_view(), name="logout"),
+    path("urls/", views.UrlsListView.as_view(), name="url-list"),
 ]

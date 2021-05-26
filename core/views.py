@@ -1,6 +1,11 @@
+from django.db.models import query
+from django.http import request
 from django.shortcuts import render
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView
 from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+from .models import Url
 
 
 class HomeView(TemplateView):
@@ -13,4 +18,13 @@ class SignInView(LoginView):
 
 class SignOutView(LogoutView):
     next_page = "/"
+
+
+class UrlsListView(LoginRequiredMixin, ListView):
+    def get_queryset(self):
+        return Url.objects.filter(user=self.request.user)
+    
+    template_name = "core/urls.html"
+    
+
     

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <table>
+        <tr>
+            <th>Url</th>
+            <th>Interval</th>
+            <th>Is paused</th>
+            <th>Status</th>
+        </tr>
+        {% for object in object_list %}
+        <tr>
+            <td>{{ object.url }}</td>
+            <td>{{ object.interval }}</td>
+            <td>{{ object.is_paused }}</td>
+            <td>{{ object.status }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
